@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './ExpenseForm.css';
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   // Can store state in its own slices
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredDate, setEnteredDate] = useState('');
@@ -42,11 +42,12 @@ const ExpenseForm = () => {
 
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 
-    console.log(expenseData);
+    props.onSaveExpenseData(expenseData);
+    props.onCancel();
     setEnteredTitle('');
     setEnteredAmount('');
     setEnteredDate('');
@@ -85,6 +86,9 @@ const ExpenseForm = () => {
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
